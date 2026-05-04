@@ -7,15 +7,15 @@ import {
   ArticleMarkdownTransformer,
   EditorState,
   Selection,
-} from '@chatwoot/prosemirror-schema';
+} from '@conviq/prosemirror-schema';
 import {
   suggestionsPlugin,
   triggerCharacters,
-} from '@chatwoot/prosemirror-schema/src/mentions/plugin';
-import imagePastePlugin from '@chatwoot/prosemirror-schema/src/plugins/image';
+} from '@conviq/prosemirror-schema/src/mentions/plugin';
+import imagePastePlugin from '@conviq/prosemirror-schema/src/plugins/image';
 import { toggleMark } from 'prosemirror-commands';
 import { wrapInList } from 'prosemirror-schema-list';
-import { toggleBlockType } from '@chatwoot/prosemirror-schema/src/menu/common';
+import { toggleBlockType } from '@conviq/prosemirror-schema/src/menu/common';
 import { checkFileSizeLimit } from 'shared/helpers/FileHelper';
 import { isEscape } from 'shared/helpers/KeyboardHelpers';
 import { collapseSelection } from 'dashboard/helper/editorHelper';
@@ -466,7 +466,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import '@chatwoot/prosemirror-schema/src/styles/article.scss';
+@import '@conviq/prosemirror-schema/src/styles/article.scss';
 
 .ProseMirror-menubar-wrapper {
   display: flex;

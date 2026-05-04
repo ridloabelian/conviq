@@ -1,16 +1,16 @@
 openapi: '3.1.0'
 info:
-  title: Chatwoot - Platform API
-  description: Platform API endpoints for Chatwoot
+  title: Conviq - Platform API
+  description: Platform API endpoints for Conviq
   version: 1.1.0
-  termsOfService: https://www.chatwoot.com/terms-of-service/
+  termsOfService: https://www.conviq.com/terms-of-service/
   contact:
-    email: hello@chatwoot.com
+    email: hello@conviq.com
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
 servers:
-  - url: https://app.chatwoot.com/
+  - url: https://app.conviq.com/
 tags:
   - name: Accounts
     description: Platform account management

@@ -124,7 +124,7 @@ RSpec.describe Account, type: :model do
       it 'returns default values' do
         account.custom_attributes = { 'plan_name': 'unknown' }
         expect(account.captain_monthly_limit).to eq(
-          { documents: ChatwootApp.max_limit, responses: ChatwootApp.max_limit }.with_indifferent_access
+          { documents: ConviqApp.max_limit, responses: ConviqApp.max_limit }.with_indifferent_access
         )
       end
     end
@@ -177,7 +177,7 @@ RSpec.describe Account, type: :model do
       account.update(limits: { agents: '' })
       InstallationConfig.where(name: 'ACCOUNT_AGENTS_LIMIT').update(value: '')
 
-      expect(account.usage_limits[:agents]).to eq(ChatwootApp.max_limit)
+      expect(account.usage_limits[:agents]).to eq(ConviqApp.max_limit)
     end
   end
 
@@ -191,7 +191,7 @@ RSpec.describe Account, type: :model do
     end
 
     before do
-      InstallationConfig.where(name: 'CHATWOOT_CLOUD_PLAN_FEATURES').first_or_create(value: plan_features)
+      InstallationConfig.where(name: 'CONVIQ_CLOUD_PLAN_FEATURES').first_or_create(value: plan_features)
     end
 
     context 'when plan_name is hacker' do
@@ -261,7 +261,7 @@ RSpec.describe Account, type: :model do
     end
 
     it 'syncs every six hours on self-hosted enterprise installs without a plan_name' do
-      allow(ChatwootApp).to receive(:self_hosted_enterprise?).and_return(true)
+      allow(ConviqApp).to receive(:self_hosted_enterprise?).and_return(true)
       account.update!(custom_attributes: {})
       expect(account.captain_document_sync_interval).to eq(6.hours)
     end

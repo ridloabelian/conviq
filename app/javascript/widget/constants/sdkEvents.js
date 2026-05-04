@@ -1,7 +1,7 @@
-export const CHATWOOT_ERROR = 'chatwoot:error';
-export const CHATWOOT_ON_MESSAGE = 'chatwoot:on-message';
-export const CHATWOOT_ON_START_CONVERSATION = 'chatwoot:on-start-conversation';
-export const CHATWOOT_POSTBACK = 'chatwoot:postback';
-export const CHATWOOT_READY = 'chatwoot:ready';
-export const CHATWOOT_OPENED = 'chatwoot:opened';
-export const CHATWOOT_CLOSED = 'chatwoot:closed';
+export const CONVIQ_ERROR = 'conviq:error';
+export const CONVIQ_ON_MESSAGE = 'conviq:on-message';
+export const CONVIQ_ON_START_CONVERSATION = 'conviq:on-start-conversation';
+export const CONVIQ_POSTBACK = 'conviq:postback';
+export const CONVIQ_READY = 'conviq:ready';
+export const CONVIQ_OPENED = 'conviq:opened';
+export const CONVIQ_CLOSED = 'conviq:closed';

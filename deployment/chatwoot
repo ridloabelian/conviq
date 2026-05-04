@@ -1,6 +1,6 @@
-# give chatwoot user permission to start/stop/restart chatwoot systemd service
+# give conviq user permission to start/stop/restart conviq systemd service
 
-%chatwoot ALL=NOPASSWD: /bin/systemctl start chatwoot.target
-%chatwoot ALL=NOPASSWD: /bin/systemctl stop chatwoot.target
-%chatwoot ALL=NOPASSWD: /bin/systemctl restart chatwoot.target
-%chatwoot ALL=NOPASSWD: /usr/local/bin/cwctl
+%conviq ALL=NOPASSWD: /bin/systemctl start conviq.target
+%conviq ALL=NOPASSWD: /bin/systemctl stop conviq.target
+%conviq ALL=NOPASSWD: /bin/systemctl restart conviq.target
+%conviq ALL=NOPASSWD: /usr/local/bin/cwctl

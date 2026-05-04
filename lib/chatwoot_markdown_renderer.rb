@@ -1,4 +1,4 @@
-class ChatwootMarkdownRenderer
+class ConviqMarkdownRenderer
   def initialize(content)
     @content = content
   end

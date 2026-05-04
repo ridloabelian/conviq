@@ -13,7 +13,7 @@
 %>
 <script>
 
-window.chatwootSettings = {
+window.conviqSettings = {
   hideMessageBubble: false,
   // showUnreadMessagesDialog: false,
   // baseDomain: '.loca.lt',
@@ -33,17 +33,17 @@ window.chatwootSettings = {
   g.async = true;
   s.parentNode.insertBefore(g,s);
   g.onload=function(){
-    window.chatwootSDK.run({
+    window.conviqSDK.run({
       websiteToken: '<%= @web_widget.website_token %>',
       baseUrl: BASE_URL
     })
   }
 })(document,"script");
 
-window.addEventListener('chatwoot:ready', function() {
-  console.log('chatwoot:ready', window.$chatwoot);
+window.addEventListener('conviq:ready', function() {
+  console.log('conviq:ready', window.$conviq);
   if (window.location.search.includes('setUser')) {
-    window.$chatwoot.setUser('<%= user_id %>', {
+    window.$conviq.setUser('<%= user_id %>', {
       identifier_hash: '<%= user_hash %>',
       email: 'jane@example.com',
       name: 'Jane Doe',
@@ -52,28 +52,28 @@ window.addEventListener('chatwoot:ready', function() {
   }
 })
 
-window.addEventListener('chatwoot:error', function(e) {
-  console.log('chatwoot:error', e.detail)
+window.addEventListener('conviq:error', function(e) {
+  console.log('conviq:error', e.detail)
 })
 
 
-window.addEventListener('chatwoot:on-message', function(e) {
-  console.log('chatwoot:on-message', e.detail)
+window.addEventListener('conviq:on-message', function(e) {
+  console.log('conviq:on-message', e.detail)
 })
 
-window.addEventListener('chatwoot:postback', function(e) {
-  console.log('chatwoot:postback', e.detail)
+window.addEventListener('conviq:postback', function(e) {
+  console.log('conviq:postback', e.detail)
 })
 
-window.addEventListener('chatwoot:opened', function() {
-  console.log('chatwoot:opened')
+window.addEventListener('conviq:opened', function() {
+  console.log('conviq:opened')
 })
 
-window.addEventListener('chatwoot:closed', function() {
-  console.log('chatwoot:closed')
+window.addEventListener('conviq:closed', function() {
+  console.log('conviq:closed')
 })
 
-window.addEventListener('chatwoot:on-start-conversation', function(e) {
-  console.log('chatwoot:on-start-conversation', e.detail)
+window.addEventListener('conviq:on-start-conversation', function(e) {
+  console.log('conviq:on-start-conversation', e.detail)
 })
 </script>
