@@ -8,15 +8,15 @@ ___
 The modern customer support platform, an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud etc.
 
 <p>
-  <img src="https://img.shields.io/circleci/build/github/ridloabelian/conviq" alt="CircleCI Badge">
-    <a href="https://hub.docker.com/r/conviq/conviq/"><img src="https://img.shields.io/docker/pulls/conviq/conviq" alt="Docker Pull Badge"></a>
-  <a href="https://hub.docker.com/r/conviq/conviq/"><img src="https://img.shields.io/docker/cloud/build/conviq/conviq" alt="Docker Build Badge"></a>
+  <img src="https://img.shields.io/circleci/build/github/chatwoot/chatwoot" alt="CircleCI Badge">
+    <a href="https://hub.docker.com/r/chatwoot/chatwoot/"><img src="https://img.shields.io/docker/pulls/chatwoot/chatwoot" alt="Docker Pull Badge"></a>
+  <a href="https://hub.docker.com/r/chatwoot/chatwoot/"><img src="https://img.shields.io/docker/cloud/build/chatwoot/chatwoot" alt="Docker Build Badge"></a>
   <img src="https://img.shields.io/github/commit-activity/m/ridloabelian/conviq" alt="Commits-per-month">
-  <a title="Crowdin" target="_self" href="https://conviq.crowdin.com/conviq"><img src="https://badges.crowdin.net/e/37ced7eba411064bd792feb3b7a28b16/localized.svg"></a>
+  <a title="Crowdin" target="_self" href="https://translate.chatwoot.com"><img src="https://badges.crowdin.net/e/37ced7eba411064bd792feb3b7a28b16/localized.svg"></a>
   <a href="https://discord.gg/cJXdrwS"><img src="https://img.shields.io/discord/647412545203994635" alt="Discord"></a>
-  <a href="https://status.conviq.com"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fconviq%2Fstatus%2Fmaster%2Fapi%2Fconviq%2Fuptime.json" alt="uptime"></a>
-  <a href="https://status.conviq.com"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fconviq%2Fstatus%2Fmaster%2Fapi%2Fconviq%2Fresponse-time.json" alt="response time"></a>
-  <a href="https://artifacthub.io/packages/helm/conviq/conviq"><img src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub" alt="Artifact HUB"></a>
+  <a href="https://status.chatwoot.com"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchatwoot%2Fstatus%2Fmaster%2Fapi%2Fchatwoot%2Fuptime.json" alt="uptime"></a>
+  <a href="https://status.chatwoot.com"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchatwoot%2Fstatus%2Fmaster%2Fapi%2Fchatwoot%2Fresponse-time.json" alt="response time"></a>
+  <a href="https://artifacthub.io/packages/helm/chatwoot/chatwoot"><img src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub" alt="Artifact HUB"></a>
 </p>
 
 
@@ -24,7 +24,7 @@ The modern customer support platform, an open-source alternative to Intercom, Ze
   <a href="https://heroku.com/deploy?template=https://github.com/ridloabelian/conviq/tree/develop" alt="Deploy to Heroku">
      <img width="150" alt="Deploy" src="https://www.herokucdn.com/deploy/button.svg"/>
   </a>
-  <a href="https://marketplace.digitalocean.com/apps/conviq?refcode=f2238426a2a8" alt="Deploy to DigitalOcean">
+  <a href="https://marketplace.digitalocean.com/apps/chatwoot?refcode=f2238426a2a8" alt="Deploy to DigitalOcean">
      <img width="200" alt="Deploy to DO" src="https://www.deploytodo.com/do-btn-blue.svg"/>
   </a>
 </p>
@@ -87,7 +87,7 @@ Publish help articles, FAQs, and guides through the built-in Help Center Portal.
 
 ## Documentation
 
-Detailed documentation is available at [conviq.com/help-center](https://www.conviq.com/help-center).
+Detailed documentation is available at [www.chatwoot.com/docs](https://www.chatwoot.com/docs).
 
 ## 🌐 Marketing Website & Billing (Mayar.id Integration)
 
@@ -130,8 +130,8 @@ If you need help or just want to hang out, come, say hi on our [Discord](https:/
 
 ## Contributors
 
-Thanks goes to all these [wonderful people](https://www.conviq.com/docs/contributors):
+Thanks goes to all these [wonderful people](https://www.chatwoot.com/docs/contributors):
 
-<a href="https://github.com/ridloabelian/conviq/graphs/contributors"><img src="https://opencollective.com/conviq/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/ridloabelian/conviq/graphs/contributors"><img src="https://opencollective.com/chatwoot/contributors.svg?width=890&button=false" /></a>
 
 *Conviq* &copy; 2017-2026, Conviq Inc - Released under the MIT License.
