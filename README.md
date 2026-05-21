@@ -118,6 +118,10 @@ Conviq features a modern, high-performance, and localized Marketing Website and 
 
 ## Security
 
-Looking to report a vulnerability? Please refer our [SECURITY.md](./SECURITY.md) file.
-*Conviq* &copy; 2017-2026, Conviq Inc - Released under the MIT License.
+Looking to report a vulnerability? Please refer to our [SECURITY.md](./SECURITY.md) file.
+
+---
+
+*Conviq* &copy; 2026, Conviq Inc. - Released under the MIT License.
+
 
