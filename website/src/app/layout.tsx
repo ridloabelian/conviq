@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
@@ -40,6 +41,24 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Script id="conviq-chat-widget" strategy="afterInteractive">
+          {`
+            (function(d,t) {
+              var BASE_URL = process.env.NEXT_PUBLIC_CONVIQ_BACKEND_URL || "http://localhost:3000";
+              var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+              g.src=BASE_URL+"/packs/js/sdk.js";
+              g.defer=true;
+              g.async=true;
+              s.parentNode.insertBefore(g,s);
+              g.onload=function(){
+                window.conviqSDK.run({
+                  websiteToken: process.env.NEXT_PUBLIC_CONVIQ_WIDGET_TOKEN || "yZ7USzaEs7hrwUAHLGwjbxJ1",
+                  baseUrl: BASE_URL
+                })
+              }
+            })(document,"script");
+          `}
+        </Script>
       </body>
     </html>
   );

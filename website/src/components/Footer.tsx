@@ -14,7 +14,7 @@ const footerLinks = {
   ],
   Perusahaan: [
     { label: "Tentang Kami", href: "#" },
-    { label: "Blog", href: "#" },
+    { label: "Blog", href: "/blog" },
     { label: "Hubungi Kami", href: "mailto:hello@conviq.id" },
   ],
   Legal: [

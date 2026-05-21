@@ -236,7 +236,7 @@ const faqItems = [
 /*  Sub-components                                                     */
 /* ------------------------------------------------------------------ */
 
-function PricingCard({ plan, index }: { plan: Plan; index: number }) {
+function PricingCard({ plan, index, onSelectPlan }: { plan: Plan; index: number; onSelectPlan: (plan: Plan) => void }) {
   const isPopular = plan.popular;
 
   return (
@@ -286,9 +286,17 @@ function PricingCard({ plan, index }: { plan: Plan; index: number }) {
       </div>
 
       {/* CTA button */}
-      <a
-        href={plan.ctaStyle === "secondary" ? "/contact" : "/signup"}
-        className={`block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all duration-200 ${
+      <button
+        onClick={() => {
+          if (plan.ctaStyle === "secondary") {
+            window.location.href = "/contact";
+          } else if (plan.price === null) {
+            window.location.href = "https://app.conviq.com/signup";
+          } else {
+            onSelectPlan(plan);
+          }
+        }}
+        className={`block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all duration-200 cursor-pointer ${
           plan.ctaStyle === "primary"
             ? "bg-primary text-white hover:bg-primary-dark shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30"
             : plan.ctaStyle === "secondary"
@@ -297,7 +305,7 @@ function PricingCard({ plan, index }: { plan: Plan; index: number }) {
         }`}
       >
         {plan.cta}
-      </a>
+      </button>
 
       {plan.freeNote && (
         <p className="mt-2 text-center text-xs text-muted">{plan.freeNote}</p>
@@ -374,11 +382,71 @@ export default function PricingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showComparison, setShowComparison] = useState(false);
 
+  // States for Checkout Modal
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    accountId: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
   const plans = tab === "cloud" ? cloudPlans : selfHostedPlans;
   const planNames =
     tab === "cloud"
       ? ["Starter", "Growth", "Business", "Enterprise"]
       : ["Community", "Premium", "Enterprise"];
+
+  const handleSelectPlan = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setIsModalOpen(true);
+    setErrorMsg(null);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckoutSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedPlan) return;
+    setIsSubmitting(true);
+    setErrorMsg(null);
+
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          mobile: formData.mobile,
+          accountId: formData.accountId,
+          plan: selectedPlan.name.toLowerCase(),
+          isSelfHosted: tab === "selfhosted",
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Gagal membuat invoice pembayaran.");
+      }
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error("URL checkout tidak ditemukan.");
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || "Terjadi kesalahan koneksi. Silakan coba lagi.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -409,7 +477,7 @@ export default function PricingPage() {
             <div className="inline-flex rounded-full bg-surface-dark p-1">
               <button
                 onClick={() => setTab("cloud")}
-                className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   tab === "cloud"
                     ? "bg-white text-secondary shadow-md"
                     : "text-muted hover:text-secondary"
@@ -419,7 +487,7 @@ export default function PricingPage() {
               </button>
               <button
                 onClick={() => setTab("selfhosted")}
-                className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   tab === "selfhosted"
                     ? "bg-white text-secondary shadow-md"
                     : "text-muted hover:text-secondary"
@@ -449,7 +517,7 @@ export default function PricingPage() {
               }`}
             >
               {plans.map((plan, i) => (
-                <PricingCard key={plan.name} plan={plan} index={i} />
+                <PricingCard key={plan.name} plan={plan} index={i} onSelectPlan={handleSelectPlan} />
               ))}
             </motion.div>
           </AnimatePresence>
@@ -463,7 +531,7 @@ export default function PricingPage() {
             <div className="text-center mb-8">
               <button
                 onClick={() => setShowComparison(!showComparison)}
-                className="inline-flex items-center gap-2 text-lg font-semibold text-secondary hover:text-primary transition-colors"
+                className="inline-flex items-center gap-2 text-lg font-semibold text-secondary hover:text-primary transition-colors cursor-pointer"
               >
                 Bandingkan Semua Fitur
                 <motion.div
@@ -604,6 +672,187 @@ export default function PricingPage() {
           </AnimatedSection>
         </div>
       </section>
+
+      {/* ============== Checkout Modal (Mayar.id) ============== */}
+      <AnimatePresence>
+        {isModalOpen && selectedPlan && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-secondary/60 backdrop-blur-md">
+            {/* Backdrop click close */}
+            <div
+              className="absolute inset-0 cursor-pointer"
+              onClick={() => {
+                if (!isSubmitting) setIsModalOpen(false);
+              }}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-white shadow-2xl z-10"
+            >
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-secondary to-secondary-light px-6 py-5 text-white flex justify-between items-center">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-accent">
+                    Checkout Pembayaran
+                  </span>
+                  <h3 className="text-xl font-bold mt-0.5">
+                    Paket {selectedPlan.name} ({tab === "cloud" ? "Cloud" : "Self-Hosted"})
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  disabled={isSubmitting}
+                  className="rounded-full p-1.5 hover:bg-white/10 transition-colors text-white/80 hover:text-white cursor-pointer disabled:opacity-50"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <form onSubmit={handleCheckoutSubmit} className="p-6 space-y-4">
+                {errorMsg && (
+                  <div className="rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700 flex gap-2.5 items-start">
+                    <X className="h-5 w-5 shrink-0 text-red-500 mt-0.5" />
+                    <p>{errorMsg}</p>
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-secondary mb-1">
+                      Nama Lengkap <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Masukkan nama lengkap Anda"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-primary focus:outline-none disabled:bg-surface"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-secondary mb-1">
+                      Alamat Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="contoh@bisnis.com"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-primary focus:outline-none disabled:bg-surface"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-secondary mb-1">
+                      Nomor WhatsApp <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="mobile"
+                      required
+                      placeholder="Contoh: 081234567890"
+                      value={formData.mobile}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-primary focus:outline-none disabled:bg-surface"
+                    />
+                    <p className="mt-1.5 text-xs text-muted">
+                      Digunakan oleh Mayar.id untuk mengirimkan link tagihan dan kuitansi pembayaran via WA.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-secondary mb-1">
+                      ID Akun Conviq <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="accountId"
+                      required
+                      placeholder="Masukkan ID Akun Conviq Anda"
+                      value={formData.accountId}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-primary focus:outline-none disabled:bg-surface"
+                    />
+                    <p className="mt-1.5 text-xs leading-relaxed text-muted">
+                      ID Akun dapat ditemukan di panel Conviq Anda (Pengaturan -&gt; ID Akun). 
+                      Belum punya akun? silakan{" "}
+                      <a
+                        href="https://app.conviq.com/signup"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline font-medium"
+                      >
+                        daftar gratis terlebih dahulu
+                      </a>.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Pricing Summary */}
+                <div className="rounded-xl bg-surface p-4 mt-6 flex justify-between items-center border border-border">
+                  <div>
+                    <span className="text-xs text-muted font-medium block">Total Pembayaran</span>
+                    <span className="text-base font-bold text-secondary">
+                      Rp {selectedPlan.price ? fmt(selectedPlan.price) : "0"}
+                      <span className="text-xs font-normal text-muted"> /agen/bulan</span>
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <span className="inline-block rounded-full bg-accent/15 px-2.5 py-1 text-xs font-semibold text-accent border border-accent/20">
+                      ⚡ Instan Aktif
+                    </span>
+                  </div>
+                </div>
+
+                {/* Modal Footer */}
+                <div className="pt-4 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    disabled={isSubmitting}
+                    className="flex-1 rounded-xl border border-border py-3 text-center text-sm font-semibold text-secondary hover:bg-surface transition-colors cursor-pointer disabled:opacity-50"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-1 rounded-xl bg-primary py-3 text-center text-sm font-semibold text-white hover:bg-primary-dark shadow-md shadow-primary/20 transition-colors cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        Memproses...
+                      </>
+                    ) : (
+                      "Bayar Sekarang"
+                    )}
+                  </button>
+                </div>
+                <p className="text-[10px] text-center text-muted mt-2">
+                  Dengan mengklik Bayar Sekarang, Anda menyetujui Ketentuan Layanan dan Kebijakan Privasi Conviq. Pembayaran diproses dengan aman oleh Mayar.id.
+                </p>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
