@@ -38,7 +38,7 @@ Conviq is the modern, open-source, and self-hosted customer support platform des
 
 ### ✨ Captain – AI Agent for Support
 
-Supercharge your support with Captain, Conviq’s AI agent. Captain helps automate responses, handle common queries, and reduce agent workload—ensuring customers get instant, accurate answers. With Captain, your team can focus on complex conversations while routine questions are resolved automatically. Read more about Captain [here](https://chwt.app/captain-docs).
+Supercharge your support with Captain, Conviq’s AI agent. Captain helps automate responses, handle common queries, and reduce agent workload—ensuring customers get instant, accurate answers. With Captain, your team can focus on complex conversations while routine questions are resolved automatically.
 
 ### 💬 Omnichannel Support Desk
 
@@ -85,10 +85,6 @@ Publish help articles, FAQs, and guides through the built-in Help Center Portal.
 - Downloadable Reports for offline analysis and reporting.
 
 
-## Documentation
-
-Detailed documentation is available at [www.chatwoot.com/docs](https://www.chatwoot.com/docs).
-
 ## 🌐 Marketing Website & Billing (Mayar.id Integration)
 
 Conviq features a modern, high-performance, and localized Marketing Website and billing system built with **Next.js 16** (located in the `/website` directory). It is optimized for static export and deployment via **Cloudflare Pages** and **Cloudflare Functions**.
@@ -130,7 +126,7 @@ If you need help or just want to hang out, come, say hi on our [Discord](https:/
 
 ## Contributors
 
-Thanks goes to all these [wonderful people](https://www.chatwoot.com/docs/contributors):
+Thanks goes to all these wonderful people:
 
 <a href="https://github.com/ridloabelian/conviq/graphs/contributors"><img src="https://opencollective.com/chatwoot/contributors.svg?width=890&button=false" /></a>
 
