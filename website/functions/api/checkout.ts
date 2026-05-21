@@ -96,8 +96,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     // Return the payment checkout link to the client
     return new Response(
       JSON.stringify({
-        checkoutUrl: data.link || data.url || data.paymentUrl,
-        invoiceId: data.id
+        checkoutUrl: data.data?.link || data.data?.url || data.link || data.url || data.paymentUrl,
+        invoiceId: data.data?.id || data.id
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
