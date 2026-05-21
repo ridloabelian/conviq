@@ -89,7 +89,7 @@ function SuccessContent() {
         {/* CTAs */}
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
           <a
-            href="https://app.conviq.com"
+            href="https://app.conviq.id"
             className="flex-1 inline-flex items-center justify-center rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/20 hover:bg-primary-dark hover:shadow-xl hover:shadow-primary/30 transition-all duration-200 gap-2 cursor-pointer"
           >
             Buka Dashboard Conviq
@@ -107,8 +107,8 @@ function SuccessContent() {
         {/* Support */}
         <p className="mt-8 text-xs text-muted">
           Mengalami kendala? Hubungi billing support kami di{" "}
-          <a href="mailto:billing@conviq.com" className="text-primary hover:underline font-medium">
-            billing@conviq.com
+          <a href="mailto:billing@conviq.id" className="text-primary hover:underline font-medium">
+            billing@conviq.id
           </a>
         </p>
       </motion.div>

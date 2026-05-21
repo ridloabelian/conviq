@@ -291,7 +291,7 @@ function PricingCard({ plan, index, onSelectPlan }: { plan: Plan; index: number;
           if (plan.ctaStyle === "secondary") {
             window.location.href = "/contact";
           } else if (plan.price === null) {
-            window.location.href = "https://app.conviq.com/signup";
+            window.location.href = "https://app.conviq.id/signup";
           } else {
             onSelectPlan(plan);
           }
@@ -661,7 +661,7 @@ export default function PricingPage() {
                     Hubungi Tim Sales Kami
                   </a>
                   <a
-                    href="/signup"
+                    href="https://app.conviq.id/signup"
                     className="inline-flex items-center rounded-xl border-2 border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/10"
                   >
                     Coba Gratis
@@ -790,7 +790,7 @@ export default function PricingPage() {
                       ID Akun dapat ditemukan di panel Conviq Anda (Pengaturan -&gt; ID Akun). 
                       Belum punya akun? silakan{" "}
                       <a
-                        href="https://app.conviq.com/signup"
+                        href="https://app.conviq.id/signup"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary hover:underline font-medium"

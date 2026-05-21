@@ -1,6 +1,6 @@
 interface Env {
   MAYAR_WEBHOOK_TOKEN?: string;
-  RAILS_BACKEND_URL?: string; // e.g., 'https://app.conviq.com' or 'http://localhost:3000' for local dev
+  RAILS_BACKEND_URL?: string; // e.g., 'https://app.conviq.id' or 'http://localhost:3000' for local dev
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
