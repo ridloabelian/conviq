@@ -119,15 +119,5 @@ Conviq features a modern, high-performance, and localized Marketing Website and 
 ## Security
 
 Looking to report a vulnerability? Please refer our [SECURITY.md](./SECURITY.md) file.
-
-## Community
-
-If you need help or just want to hang out, come, say hi on our [Discord](https://discord.gg/cJXdrwS) server.
-
-## Contributors
-
-Thanks goes to all these wonderful people:
-
-<a href="https://github.com/ridloabelian/conviq/graphs/contributors"><img src="https://opencollective.com/chatwoot/contributors.svg?width=890&button=false" /></a>
-
 *Conviq* &copy; 2017-2026, Conviq Inc - Released under the MIT License.
+
