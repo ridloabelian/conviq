@@ -8,10 +8,10 @@ ___
 The modern customer support platform, an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud etc.
 
 <p>
-  <img src="https://img.shields.io/circleci/build/github/conviq/conviq" alt="CircleCI Badge">
+  <img src="https://img.shields.io/circleci/build/github/ridloabelian/conviq" alt="CircleCI Badge">
     <a href="https://hub.docker.com/r/conviq/conviq/"><img src="https://img.shields.io/docker/pulls/conviq/conviq" alt="Docker Pull Badge"></a>
   <a href="https://hub.docker.com/r/conviq/conviq/"><img src="https://img.shields.io/docker/cloud/build/conviq/conviq" alt="Docker Build Badge"></a>
-  <img src="https://img.shields.io/github/commit-activity/m/conviq/conviq" alt="Commits-per-month">
+  <img src="https://img.shields.io/github/commit-activity/m/ridloabelian/conviq" alt="Commits-per-month">
   <a title="Crowdin" target="_self" href="https://conviq.crowdin.com/conviq"><img src="https://badges.crowdin.net/e/37ced7eba411064bd792feb3b7a28b16/localized.svg"></a>
   <a href="https://discord.gg/cJXdrwS"><img src="https://img.shields.io/discord/647412545203994635" alt="Discord"></a>
   <a href="https://status.conviq.com"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fconviq%2Fstatus%2Fmaster%2Fapi%2Fconviq%2Fuptime.json" alt="uptime"></a>
@@ -21,7 +21,7 @@ The modern customer support platform, an open-source alternative to Intercom, Ze
 
 
 <p>
-  <a href="https://heroku.com/deploy?template=https://github.com/conviq/conviq/tree/master" alt="Deploy to Heroku">
+  <a href="https://heroku.com/deploy?template=https://github.com/ridloabelian/conviq/tree/develop" alt="Deploy to Heroku">
      <img width="150" alt="Deploy" src="https://www.herokucdn.com/deploy/button.svg"/>
   </a>
   <a href="https://marketplace.digitalocean.com/apps/conviq?refcode=f2238426a2a8" alt="Deploy to DigitalOcean">
@@ -89,37 +89,36 @@ Publish help articles, FAQs, and guides through the built-in Help Center Portal.
 
 Detailed documentation is available at [conviq.com/help-center](https://www.conviq.com/help-center).
 
-## Translation process
+## 🌐 Marketing Website & Billing (Mayar.id Integration)
 
-The translation process for Conviq web and mobile app is managed at [https://translate.conviq.com](https://translate.conviq.com) using Crowdin. Please read the [translation guide](https://www.conviq.com/docs/contributing/translating-conviq-to-your-language) for contributing to Conviq.
+Conviq features a modern, high-performance, and localized Marketing Website and billing system built with **Next.js 16** (located in the `/website` directory). It is optimized for static export and deployment via **Cloudflare Pages** and **Cloudflare Functions**.
 
-## Branching model
+### Key Highlights:
+- **Localized Indonesian Blog (`/blog`)**: High-fidelity, animated blog layout featuring content filters (Semua, WhatsApp, AI, Layanan Pelanggan, Open-Source), dynamic search, and an optimized client-side article sharing component.
+- **Embedded Support Widget**: The Conviq Live Chat SDK is loaded globally, ensuring visitors can chat with support agents in real-time.
+- **Mayar.id Indonesia Billing**: Seamless payment flow integrated with Mayar's Invoice API. Supports Indonesian payment methods (Virtual Accounts, QRIS, E-wallets) for Growth, Business, and Premium tiers.
+- **Automated Provisioning Engine**: Fully integrated with the Rails Enterprise overlay via a secure Webhook Receiver. Automatically provisions licenses (`captain_responses` limit) and updates self-hosted `InstallationConfig` keys upon successful payment.
 
-We use the [git-flow](https://nvie.com/posts/a-successful-git-branching-model/) branching model. The base branch is `develop`.
-If you are looking for a stable version, please use the `master` or tags labelled as `v1.x.x`.
+### Developing the Marketing Site locally:
 
-## Deployment
+1. **Enter the project folder**:
+   ```bash
+   cd website
+   ```
+2. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
+3. **Run the local development server**:
+   ```bash
+   pnpm dev
+   ```
+4. **Compile the optimized production static build**:
+   ```bash
+   pnpm build
+   ```
 
-### Heroku one-click deploy
-
-Deploying Conviq to Heroku is a breeze. It's as simple as clicking this button:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/conviq/conviq/tree/master)
-
-Follow this [link](https://www.conviq.com/docs/environment-variables) to understand setting the correct environment variables for the app to work with all the features. There might be breakages if you do not set the relevant environment variables.
-
-
-### DigitalOcean 1-Click Kubernetes deployment
-
-Conviq now supports 1-Click deployment to DigitalOcean as a kubernetes app.
-
-<a href="https://marketplace.digitalocean.com/apps/conviq?refcode=f2238426a2a8" alt="Deploy to DigitalOcean">
-  <img width="200" alt="Deploy to DO" src="https://www.deploytodo.com/do-btn-blue.svg"/>
-</a>
-
-### Other deployment options
-
-For other supported options, checkout our [deployment page](https://conviq.com/deploy).
+---
 
 ## Security
 
@@ -133,7 +132,6 @@ If you need help or just want to hang out, come, say hi on our [Discord](https:/
 
 Thanks goes to all these [wonderful people](https://www.conviq.com/docs/contributors):
 
-<a href="https://github.com/conviq/conviq/graphs/contributors"><img src="https://opencollective.com/conviq/contributors.svg?width=890&button=false" /></a>
-
+<a href="https://github.com/ridloabelian/conviq/graphs/contributors"><img src="https://opencollective.com/conviq/contributors.svg?width=890&button=false" /></a>
 
 *Conviq* &copy; 2017-2026, Conviq Inc - Released under the MIT License.
