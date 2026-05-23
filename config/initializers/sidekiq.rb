@@ -45,6 +45,7 @@ Rails.application.reloader.to_prepare do
     enterprise_schedule_file = Rails.root.join('enterprise/config/schedule.yml')
     schedule.merge!(YAML.load_file(enterprise_schedule_file)) if ConviqApp.enterprise? && enterprise_schedule_file.exist?
 
+
     # Cron entries removed from schedule.yml but possibly still in Redis
     # with source:'dynamic' (predating the source tag). load_from_hash!
     # only cleans up source:'schedule' entries, so these need explicit removal.
