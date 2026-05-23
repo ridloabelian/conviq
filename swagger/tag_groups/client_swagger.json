@@ -1,12 +1,12 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Conviq",
-    "description": "This is the API documentation for Conviq server.",
+    "title": "Chatwoot",
+    "description": "This is the API documentation for Chatwoot server.",
     "version": "1.1.0",
-    "termsOfService": "https://www.conviq.com/terms-of-service/",
+    "termsOfService": "https://www.chatwoot.com/terms-of-service/",
     "contact": {
-      "email": "hello@conviq.com"
+      "email": "hello@chatwoot.com"
     },
     "license": {
       "name": "MIT License",
@@ -15,7 +15,7 @@
   },
   "servers": [
     {
-      "url": "https://app.conviq.com/"
+      "url": "https://app.chatwoot.com/"
     }
   ],
   "paths": {
@@ -1664,15 +1664,16 @@
           "availability_status": {
             "type": "string",
             "enum": [
-              "available",
+              "online",
               "busy",
               "offline"
             ],
-            "description": "The availability status of the agent computed by Conviq."
+            "readOnly": true,
+            "description": "The effective availability status of the agent, derived from the configured availability, auto-offline setting, and current presence. To update an agent's configured availability, use the availability field in create or update requests."
           },
           "auto_offline": {
             "type": "boolean",
-            "description": "Whether the availability status of agent is configured to go offline automatically when away."
+            "description": "Whether the agent is automatically marked offline when they are away."
           },
           "confirmed": {
             "type": "boolean",
@@ -2087,10 +2088,17 @@
                 "contact_updated",
                 "message_created",
                 "message_updated",
-                "webwidget_triggered"
+                "webwidget_triggered",
+                "conversation_typing_on",
+                "conversation_typing_off"
               ]
             },
             "description": "The list of subscribed events"
+          },
+          "secret": {
+            "type": "string",
+            "nullable": true,
+            "description": "Secret used to sign webhook requests. Signed webhook deliveries include `X-Chatwoot-Timestamp` and `X-Chatwoot-Signature`; the signature is `sha256=` followed by the HMAC-SHA256 of `{timestamp}.{raw_request_body}` using this secret. Deliveries also include `X-Chatwoot-Delivery` when a delivery id is available."
           },
           "account_id": {
             "type": "number",
@@ -2251,12 +2259,12 @@
           {
             "type": "object",
             "properties": {
-              "latest_conviq_version": {
+              "latest_chatwoot_version": {
                 "type": [
                   "string",
                   "null"
                 ],
-                "description": "Latest version of Conviq available",
+                "description": "Latest version of Chatwoot available",
                 "example": "3.0.0"
               },
               "subscribed_features": {
@@ -2544,7 +2552,7 @@
           },
           "pubsub_token": {
             "type": "string",
-            "description": "The token to be used to connect to conviq websocket"
+            "description": "The token to be used to connect to chatwoot websocket"
           }
         }
       },
@@ -3367,19 +3375,19 @@
             "description": "Whether its administrator or agent",
             "example": "agent"
           },
-          "availability_status": {
+          "availability": {
             "type": "string",
             "enum": [
-              "available",
+              "online",
               "busy",
               "offline"
             ],
-            "description": "The availability setting of the agent.",
-            "example": "available"
+            "description": "The configured availability of the agent.",
+            "example": "online"
           },
           "auto_offline": {
             "type": "boolean",
-            "description": "Whether the availability status of agent is configured to go offline automatically when away.",
+            "description": "Whether the agent is automatically marked offline when they are away.",
             "example": true
           }
         }
@@ -3399,19 +3407,19 @@
             "description": "Whether its administrator or agent",
             "example": "agent"
           },
-          "availability_status": {
+          "availability": {
             "type": "string",
             "enum": [
-              "available",
+              "online",
               "busy",
               "offline"
             ],
-            "description": "The availability status of the agent.",
-            "example": "available"
+            "description": "The configured availability of the agent.",
+            "example": "online"
           },
           "auto_offline": {
             "type": "boolean",
-            "description": "Whether the availability status of agent is configured to go offline automatically when away.",
+            "description": "Whether the agent is automatically marked offline when they are away.",
             "example": true
           }
         }
@@ -3630,7 +3638,7 @@
                     "type": "object",
                     "description": "The processed param values for template variables in template",
                     "example": {
-                      "1": "Conviq"
+                      "1": "Chatwoot"
                     }
                   }
                 }
@@ -4111,7 +4119,9 @@
                 "message_updated",
                 "contact_created",
                 "contact_updated",
-                "webwidget_triggered"
+                "webwidget_triggered",
+                "conversation_typing_on",
+                "conversation_typing_off"
               ]
             },
             "description": "The events you want to subscribe to.",
@@ -4231,7 +4241,7 @@
           "custom_domain": {
             "type": "string",
             "description": "Custom domain to display help center.",
-            "example": "conviq.help"
+            "example": "chatwoot.help"
           },
           "header_text": {
             "type": "string",
@@ -4241,7 +4251,7 @@
           "homepage_link": {
             "type": "string",
             "description": "link to main dashboard",
-            "example": "https://www.conviq.com/"
+            "example": "https://www.chatwoot.com/"
           },
           "name": {
             "type": "string",
@@ -6315,7 +6325,7 @@
         "schema": {
           "type": "string"
         },
-        "description": "Id of the session for which the conversation is created.\n\n\n\n Source Ids can be obtained through contactable inboxes API or via generated.<br/><br/>Website: Conviq generated string which can be obtained from webhook events. <br/> Phone Channels(Twilio): Phone number in e164 format <br/> Email Channels: Contact Email address <br/> API Channel: Any Random String"
+        "description": "Id of the session for which the conversation is created.\n\n\n\n Source Ids can be obtained through contactable inboxes API or via generated.<br/><br/>Website: Chatwoot generated string which can be obtained from webhook events. <br/> Phone Channels(Twilio): Phone number in e164 format <br/> Email Channels: Contact Email address <br/> API Channel: Any Random String"
       },
       "contact_sort_param": {
         "in": "query",

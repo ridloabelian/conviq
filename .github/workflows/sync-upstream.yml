@@ -1,0 +1,39 @@
+name: Check Upstream Updates
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday morning (UTC)
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/chatwoot/chatwoot.git
+          git fetch upstream
+
+      - name: Check for upstream changes
+        id: check_changes
+        run: |
+          COUNT=$(git log HEAD..upstream/develop --oneline | wc -l | tr -d ' ')
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          git log HEAD..upstream/develop --oneline > upstream_changes.txt
+          cat upstream_changes.txt
+
+      - name: Summary
+        run: |
+          echo "## Upstream Changes Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          COUNT=$(git log HEAD..upstream/develop --oneline | wc -l | tr -d ' ')
+          echo "**$COUNT commits** ahead in Chatwoot upstream" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Recent commits:" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          git log HEAD..upstream/develop --oneline | head -20 >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

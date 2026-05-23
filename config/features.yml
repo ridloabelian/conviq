@@ -17,10 +17,10 @@
   display_name: Facebook Channel
   enabled: true
   help_url: https://chwt.app/hc/fb
-- name: channel_twitter
-  display_name: Twitter Channel
-  enabled: true
-  deprecated: true
+- name: conversation_unread_counts
+  display_name: Conversation Unread Counts
+  enabled: false
+  chatwoot_internal: true
 - name: ip_lookup
   display_name: IP Lookup
   enabled: false
@@ -144,10 +144,11 @@
 - name: conviq_v4
   display_name: Conviq V4
   enabled: true
-- name: report_v4
-  display_name: Report V4
+- name: captain_v1_action_classifier
+  display_name: Captain V1 Action Classifier
   enabled: false
   deprecated: true
+  premium: true
 - name: contact_conviq_support_team
   display_name: Contact Conviq Support Team
   enabled: true
@@ -218,6 +219,7 @@
 - name: quoted_email_reply
   display_name: Quoted Email Reply
   enabled: false
+  deprecated: true
 - name: companies
   display_name: Companies
   enabled: false

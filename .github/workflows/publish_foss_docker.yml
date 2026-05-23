@@ -18,6 +18,9 @@ on:
 env:
   DOCKER_REPO: conviq/conviq
 
+permissions:
+  contents: read
+
 jobs:
   build:
     strategy:
