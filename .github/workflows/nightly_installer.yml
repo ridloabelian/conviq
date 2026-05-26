@@ -14,6 +14,9 @@ on:
     - cron: "0 0 * * *"
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   nightly:
     runs-on: ubuntu-24.04
@@ -23,8 +26,18 @@ jobs:
       run: |
         wget https://get.conviq.app/linux/install.sh
         chmod +x install.sh
-        #fix for postgtres not starting automatically in gh action env
-        sed -i '/function configure_db() {/a sudo service postgresql start' install.sh
+        # fix for postgres not starting automatically in gh action env
+        # try both patterns in case the script format changes
+        if grep -q 'function configure_db() {' install.sh; then
+          sed -i '/function configure_db() {/a sudo service postgresql start' install.sh
+        elif grep -q 'configure_db() {' install.sh; then
+          sed -i '/configure_db() {/a sudo service postgresql start' install.sh
+        else
+          echo "WARNING: could not patch configure_db to start postgres"
+        fi
+        echo "--- install.sh head ---"
+        head -n 60 install.sh
+        echo "--- end head ---"
 
     - name: create input file
       run: |
@@ -33,7 +46,23 @@ jobs:
 
     - name: Run the installer
       run: |
-        sudo ./install.sh --install < input
+        # ensure log file exists so we can always upload it
+        sudo mkdir -p /var/log
+        sudo touch /var/log/conviq-setup.log
+        sudo touch /var/log/chatwoot-setup.log
+
+        EXIT_CODE=0
+        sudo ./install.sh --install < input || EXIT_CODE=$?
+
+        echo "--- /var/log/conviq-setup.log ---"
+        sudo cat /var/log/conviq-setup.log || true
+        echo "--- /var/log/chatwoot-setup.log ---"
+        sudo cat /var/log/chatwoot-setup.log || true
+
+        if [ "$EXIT_CODE" -ne 0 ]; then
+          echo "Installer exited with code $EXIT_CODE"
+          exit "$EXIT_CODE"
+        fi
 
         #  disabling http verify for now as http
         #  access to port 3000 fails in gh action env
@@ -49,4 +78,7 @@ jobs:
       if: always()
       with:
         name: conviq-setup-log-file
-        path: /var/log/conviq-setup.log
+        path: |
+          /var/log/conviq-setup.log
+          /var/log/chatwoot-setup.log
+        if-no-files-found: ignore
